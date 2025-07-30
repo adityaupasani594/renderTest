@@ -1,7 +1,7 @@
 import os
 import requests
 
-# ✅ Replace this with the actual filenames you have uploaded to Supabase
+# List of known filenames uploaded to your Supabase bucket
 KNOWN_IMAGES = [
     "Kau_AM.png",
     "Manav_AM.png",
@@ -12,17 +12,15 @@ KNOWN_IMAGES = [
     "MK_AM.png",
 ]
 
-
 def sync_images(bucket_url, local_dir="AM_OPG"):
     """
     Downloads images from a public Supabase bucket given known filenames.
 
     Args:
-        bucket_url (str): Base URL of your Supabase public bucket.
+        bucket_url (str): Base URL of your Supabase public bucket (without trailing slash).
         local_dir (str): Local directory to store downloaded images.
     """
     os.makedirs(local_dir, exist_ok=True)
-
     print(f"[INFO] Syncing images from Supabase bucket: {bucket_url}")
 
     for filename in KNOWN_IMAGES:
@@ -39,5 +37,5 @@ def sync_images(bucket_url, local_dir="AM_OPG"):
             with open(local_path, 'wb') as f:
                 f.write(response.content)
             print(f"✅ Downloaded: {filename}")
-        except Exception as e:
+        except requests.exceptions.RequestException as e:
             print(f"❌ Failed to download {filename}: {e}")
