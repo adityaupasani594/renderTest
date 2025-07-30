@@ -13,7 +13,7 @@ KNOWN_IMAGES = [
 ]
 
 
-def sync_images_supabase(bucket_url, local_dir="AM_OPG"):
+def sync_images(bucket_url, local_dir="AM_OPG"):
     """
     Downloads images from a public Supabase bucket given known filenames.
 
